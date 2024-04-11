@@ -1,0 +1,43 @@
+{
+  "title": "Produtos",
+  "desc": "Gerenciamento de produtos",
+  "schema": [
+    [
+      "name",
+      "Nome",
+      "string"
+    ],
+    [
+      "desc",
+      "Descrição",
+      "string"
+    ],
+    [
+      "obs",
+      "Obs",
+      "textarea"
+    ]
+  ],
+  "data": [
+    {
+      "name": "Polietileno",
+      "id": "fpbA8",
+      "code": "hISox"
+    },
+    {
+      "name": "Polipropileno",
+      "id": "fqWn6",
+      "code": "Pi5Dn"
+    },
+    {
+      "name": "PET",
+      "id": "qPcut",
+      "code": "LXVTs"
+    },
+    {
+      "name": "Macroeconomia",
+      "id": "YbE1s",
+      "code": "cLSZ9"
+    }
+  ]
+}

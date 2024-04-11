@@ -1,0 +1,91 @@
+{
+  "title": "Clientes",
+  "desc": "Gerenciamento de clientes",
+  "schema": [
+    [
+      "name",
+      "Nome completo",
+      "string"
+    ],
+    [
+      "email",
+      "Email",
+      "string"
+    ],
+    [
+      "username",
+      "usuario",
+      "string"
+    ],
+    [
+      "password",
+      "Senha",
+      "string"
+    ],
+    [
+      "status",
+      "Status",
+      "options",
+      "Ativo:1, Suspenso:0"
+    ],
+    [
+      "products",
+      "Produtos",
+      "multiselect",
+      {
+        "title": "selecione os produtos",
+        "table": "produtos",
+        "optionLabel": "name",
+        "optionCode": "id",
+        "maxSelectedLabels": 100
+      }
+    ]
+  ],
+  "data": [
+    {
+      "name": "marcelo",
+      "email": "maga@teste.com",
+      "username": "maga",
+      "password": "12345",
+      "products": [
+        {
+          "name": "Polietileno",
+          "id": "fpbA8",
+          "code": "hISox"
+        },
+        {
+          "name": "PET",
+          "id": "qPcut",
+          "code": "LXVTs"
+        }
+      ],
+      "id": "rvOlk",
+      "code": "8zvd9"
+    },
+    {
+      "name": "maria",
+      "email": "maria@ss.com",
+      "username": "maria",
+      "password": "12345",
+      "products": [
+        {
+          "name": "PET",
+          "id": "qPcut",
+          "code": "LXVTs"
+        },
+        {
+          "name": "Polipropileno",
+          "id": "fqWn6",
+          "code": "Pi5Dn"
+        },
+        {
+          "name": "Macroeconomia",
+          "id": "YbE1s",
+          "code": "cLSZ9"
+        }
+      ],
+      "id": "rCTWW",
+      "code": "LciTL"
+    }
+  ]
+}

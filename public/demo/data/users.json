@@ -1,0 +1,32 @@
+{
+  "table": "users",
+  "title": "Usuários",
+  "desc": "Gerenciamento de usuários",
+  "schema": {
+    "id": {
+      "label": "ID",
+      "type": "INTEGER",
+      "extra": "PRIMARY KEY"
+    },
+    "name": {
+      "label": "Nome completo",
+      "type": "STRING",
+      "extra": "NOT NULL"
+    },
+    "email": {
+      "label": "E-mail",
+      "type": "STRING",
+      "extra": "NOT NULL"
+    },
+    "username": {
+      "label": "Nome de usuário",
+      "type": "STRING",
+      "extra": "NOT NULL"
+    },
+    "status": {
+      "label": "Status",
+      "type": "STRING",
+      "extra": "NOT NULL"
+    }
+  }
+}

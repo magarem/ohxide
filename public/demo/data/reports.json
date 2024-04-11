@@ -1,0 +1,95 @@
+{
+  "title": "Relatórios",
+  "desc": "Gerenciamento",
+  "schema": [
+    [
+      "id",
+      "id",
+      "string"
+    ],
+    [
+      "year",
+      "Ano",
+      "string"
+    ],
+    [
+      "month",
+      "Mês",
+      "string"
+    ],
+    [
+      "title",
+      "Título",
+      "string"
+    ],
+    [
+      "desc",
+      "Descrição",
+      "string"
+    ],
+    [
+      "file",
+      "Arquivo",
+      "upload"
+    ],
+    [
+      "producttype",
+      "Tipo",
+      "multiselect",
+      {
+        "title": "selecione os produtos",
+        "table": "produtos",
+        "optionLabel": "name",
+        "optionCode": "id",
+        "maxSelectedLabels": 1
+      }
+    ]
+  ],
+  "data": [
+    {
+      "year": "2024",
+      "month": "1",
+      "title": "rel1",
+      "producttype": [
+        {
+          "name": "Polietileno",
+          "id": "fpbA8",
+          "code": "hISox"
+        }
+      ],
+      "id": "Lr0v9",
+      "code": "SSav5",
+      "file": "Ebook_Apreenda_como_investir_em_dividendos-1.pdf"
+    },
+    {
+      "year": "2024",
+      "month": "1",
+      "title": "conjuntura",
+      "file": "conjuntura_economica_202401baixa.pdf",
+      "producttype": [
+        {
+          "name": "PET",
+          "id": "qPcut",
+          "code": "LXVTs"
+        }
+      ],
+      "id": "rAw9i",
+      "code": "RPyyh"
+    },
+    {
+      "producttype": [
+        {
+          "name": "Macroeconomia",
+          "id": "YbE1s",
+          "code": "cLSZ9"
+        }
+      ],
+      "file": "Evento Energias Renováveis.pdf",
+      "year": "2024",
+      "month": "2",
+      "title": "Macro",
+      "id": "Pn7C4",
+      "code": "vflMh"
+    }
+  ]
+}
