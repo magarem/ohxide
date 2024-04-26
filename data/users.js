@@ -3,7 +3,7 @@ import {db} from "@/data/db_cmds"
 
 let ops = []
 const userrolesData = await db.get("select * from userroles")
-userrolesData.forEach(element => {
+userrolesData?.forEach(element => {
   ops.push({name:element.name, code:element.id})
 });
 

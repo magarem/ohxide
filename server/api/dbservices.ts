@@ -3,7 +3,7 @@ import Database from 'better-sqlite3';
 // console.log('data:', data);
 
 export default defineEventHandler( async (event) => {
-    const db = new Database('database.db');
+    
     // db.pragma('journal_mode = WAL');
 
   let req = null
@@ -48,6 +48,7 @@ export default defineEventHandler( async (event) => {
 //    }
 
    const insertData = (table, newBrandData) => {
+    const db = new Database('database.db');
     // As an object with named parameters.
     const keyValues = [];
     const keyValues2 = [];
@@ -71,11 +72,12 @@ export default defineEventHandler( async (event) => {
     const insertions = stmt.run(params);
 
     // params.push(brand.id);
-
+    db.close();
     return insertions
 }
 
    const updateData = (table, newBrandData, where_) => {
+        const db = new Database('database.db');
         // As an object with named parameters.
         const keyValues = [];
         const params = [];
@@ -96,27 +98,32 @@ export default defineEventHandler( async (event) => {
         const updates = stmt.run(params);
 
         // params.push(brand.id);
-
+        db.close();
         return updates
    }
 
    const deleteData = (table, where_) => {
+        const db = new Database('database.db')
         const stmt = db.prepare(`DELETE FROM ${table} WHERE ${where_}`); 
         const delete_ = stmt.run();
+        db.close();
         return delete_
     }
 
     const execSql = (sql) => {
+        const db = new Database('database.db');
         const ret = db.exec(sql); 
         console.log('execSql:', ret);
+        db.close();
         return ret
     }
     
     const getData = (sql) => {
+        const db = new Database('database.db');
         const selectData = db.prepare(sql).all()
         // const ret_ = selectData.run() 
         // console.log('selectData:', selectData);
-        
+        db.close();
         return selectData
     }
 
@@ -141,6 +148,7 @@ export default defineEventHandler( async (event) => {
     } 
 
     if (event.node.req.method === 'GET') {
+        
         req = getQuery(event)
         console.log('req.sql:', req.sql.trim());
         const ret = getData(req.sql.trim())

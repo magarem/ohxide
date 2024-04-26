@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 interface UserPayloadInterface {
   type: string;
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -13,7 +13,9 @@ export const useAuthStore = defineStore('auth', {
     loading: false,
   }),
   actions: {
-    async authenticateUser({ type, username, password }: UserPayloadInterface) {
+    async authenticateUser({ type, email, password }: UserPayloadInterface) {
+      console.log('email::::::>', email);
+      
       // useFetch from nuxt 3
       // const { data, pending }: any = await useFetch('https://dummyjson.com/auth/login', {
       const { data, pending }: any = await useFetch('/api/login_do', {
@@ -21,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
         headers: { 'Content-Type': 'application/json' },
         body: {
           type,
-          username,
+          email,
           password,
         },
       });

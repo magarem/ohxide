@@ -4,7 +4,7 @@
             <div class="flex">
                 <img src="/img/logo.jpeg" style="width: 150px; margin-right: 30px;"/>
                <div>
-                <h1 style="margin-top: 12px; margin-left: 15px;">WReport</h1>
+                <h1 style="margin-top: 12px; margin-left: 15px;">Ohxide report system</h1>
                 <h3 style="margin-top: 15px; margin-left: 15px;">Admin</h3>
                </div>
                 
@@ -22,12 +22,12 @@
                     required
                 />
                 <InputText
-                    name="fidelis"
-                    v-model="user.username"
+                    name="email"
+                    v-model="user.email"
                     type="text"
                     class="input"
-                    placeholder="Usuário"
-                    autocomplete="username"
+                    placeholder="Email"
+                    autocomplete="email"
                     required
                    
                 />
@@ -95,7 +95,7 @@ const { authenticated } = storeToRefs(useAuthStore()); // make authenticated sta
 let msg = ref('')
 const user = ref({
   type: 'users',
-  username: '',
+  email: '',
   password: '',
 });
 const router = useRouter();
@@ -112,7 +112,7 @@ const login = async () => {
     // setData('dataUser', )
     router.push('/admin');
   }else{
-    msg.value = "Erro: Usuário e/ou senha inválidos"
+    msg.value = "Erro: Email e/ou senha inválidos"
   }
 
 };

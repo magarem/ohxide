@@ -186,11 +186,10 @@ const items = ref([
       </div> -->
     </div>
   </nav>
-  <div v-if="false" class="p-2" style="background-color: #9f763a;">
-          Usuário: {{dataUser?.username}} - {{ dataUser?.name }} 
-      <span v-if="dataUser?.products">| Produtos: {{ dataUser?.products }}</span> 
-      | <Button label="Sair" @click="logOut" severity="contrast" text class="p-0"/>
+  <div v-if="true" class="p-2" style="background-color: #9f763a; border-radius: 8px;">
+          Usuário: {{dataUser?.email}} - {{ dataUser?.name }} 
   </div>
+  
 <div class="p-4">
   <slot />
 </div>

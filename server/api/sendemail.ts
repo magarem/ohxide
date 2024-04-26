@@ -1,8 +1,9 @@
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
 import Database from 'better-sqlite3';
-import shell from "shelljs"
+// import shell from "shelljs"
 
 export default defineEventHandler(async (event) => {
+  
   const db = new Database('database.db');
   let ret = []
   let link = ""
@@ -16,13 +17,6 @@ export default defineEventHandler(async (event) => {
   const clientsIds = req.clients.map(x=>`'${x}'`).join(',')
   console.log('clientsIds:', clientsIds);
   
-  const getData = (sql) => {
-      const selectData = db.prepare(sql).all()
-      // const ret_ = selectData.run() 
-      console.log('selectData:', selectData);
-      
-      return selectData
-  }
 
     // var transporter = nodemailer.createTransport({
     //     service: 'gmail',
@@ -37,7 +31,7 @@ export default defineEventHandler(async (event) => {
     // });
 
 
-    const download = async (year, month, client) => {
+    const client_final_report_build = async (year, month, client) => {
       const sql = `
       select 
           COUNT(reports.id), 
@@ -53,32 +47,45 @@ export default defineEventHandler(async (event) => {
       where 
           reports.tag = products.id AND 
           instr(clients.tags, reports.tag) > 0 AND
-          clients.id like '${client.id}'
+          clients.id like '${client.id}' AND
+          reports.year LIKE '${year}' AND
+          reports.month LIKE '${month}' 
       GROUP BY 
           reports.year, 
           reports.month 
       order by 
           year DESC, 
           month DESC 
-    ` 
-      let data_ = await $fetch('/api/dbservices?sql=' + sql.replace(/\s+/g,' ').trim());
-      data_ = data_.filter(x => x.year == year && x.month == month)
+      ` 
+      // let data_ = await $fetch('/api/dbservices?sql=' + sql.replace(/\s+/g,' ').trim());
+      let data_ = db.prepare(sql.replace(/\s+/g,' ').trim()).all()
+     
+      // data_ = data_.filter(x => x.year == year && x.month == month)
       // await $fetch(`/api/shell?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files}`)
       console.log("whay stop?");
-      let data2_ = await $fetch(`http://216.238.98.143:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`);
-      console.log('data2_', data2_);
-   
+      if (data_[0]?.files){
+        let data2_ = await $fetch(`http://216.238.98.143:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`);
+        console.log('data2_', data2_);
+        return data2_
+      }else{
+        // return "Erro: Não existem relatórios definidos"
+        return false
+      }
     }
 
 
-    const clients = getData(`select * from clients where status like 'ativo' and id in (${clientsIds})`)
+    const clients = db.prepare(`select * from clients where status like 'ativo' and id in (${clientsIds})`).all()
     console.log(clients);
 
-    clients.forEach(async x=>{
-      await download(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
-    })
-
-    clients.forEach(async x=>{
+    // clients.forEach(async x=>{
+    //   let a = await client_final_report_build(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
+    //   console.log(`${clients.find(xx=>xx.id==x.id).name} ---> ${a}`)
+    //   ret.push(`${clients.find(xx=>xx.id==x.id).name} ---> ${a}`)
+    // })
+    
+    await Promise.all(
+     clients.map(async (x, index)=>{
+      
       const option = { month: 'long'}
       const locale = 'pt-br'
       const monthName = new Date().toLocaleDateString( locale, option)
@@ -90,7 +97,7 @@ export default defineEventHandler(async (event) => {
       message = message.replaceAll("[ano]", req.year)
       message = message.replaceAll("[mes]", meses[req.month-1])
       message = message.replaceAll("[mês]", meses[req.month-1])
-      ret.push(`Email enviado para: ${x.email}`)
+      // ret.push(`Email enviado para: ${x.email}`)
 
       if (req.linktext){
         // link = `<br/><a href="${url.origin}/download?year=${req.year}&month=${req.month}&client=${x.id}">${req.linktext}</a>`
@@ -99,63 +106,41 @@ export default defineEventHandler(async (event) => {
       
       // download(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
     
-      // var mailOptions = {
-      //   from: 'contato@magaweb.com.br',
-      //   to: x.email,
-      //   subject: req.subject,
-      //   html: `
-      //     <img src="https://bucket.mailersendapp.com/neqvygmrw5l0p7w2/jy7zpl9359ol5vx6/images/9ba4cd5b-1751-4410-adea-640b39425b51.jpeg" style="width: 70px;"/><br/>
-      //     ${message.replaceAll("\n", "<br/>")}
-      //     ${link}
-      //   `,
-      //   attachments: [{
-      //     filename: `${x.id}_report_${req.year}_${req.month}.pdf`,
-      //     path: `upload/${x.id}_report_${req.year}_${req.month}.pdf`,
-      //     contentType: 'application/pdf'
-      //   }]
-      //   ,
-      //   function(err, info) {
-      //     if (err) {
-      //       console.error(err);
-      //     } else {
-      //       console.log(info);
-      //     }
-      //   }
-      // };
+      let get_final_report_name = await client_final_report_build(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
+     
       
-      const dataEmailSend = await $fetch('/api/mailersend', {
-        method: 'POST',
-        body: JSON.stringify({
-          to: x.email,
-          destinatario: x.email,
-          attach: `/home/maga/dev/ohxide/reports/${x.id}_report_${req.year}_${req.month}.pdf`,
-          subject: req.subject,
-          // body: req.subject,
-          html: `
-            <img src="https://bucket.mailersendapp.com/neqvygmrw5l0p7w2/jy7zpl9359ol5vx6/images/9ba4cd5b-1751-4410-adea-640b39425b51.jpeg" style="width: 70px;"/><br/>
-            ${message.replaceAll("\n", "<br/>")}
-            ${link}
-          `
+      if (get_final_report_name) {
+        console.log(`/home/maga/dev/ohxide/reports/${get_final_report_name}`);
+        const dataEmailSend = await $fetch('/api/mailersend', {
+          method: 'POST',
+          body: JSON.stringify({
+            to: x.email,
+            destinatario: x.email,
+            // attach: `/home/maga/dev/ohxide/reports/${x.id}_report_${req.year}_${req.month}.pdf`,
+            attach: `/home/maga/dev/ohxide/reports/${get_final_report_name}`,
+            subject: req.subject,
+            // body: req.subject,
+            html: `
+              <img src="https://bucket.mailersendapp.com/neqvygmrw5l0p7w2/jy7zpl9359ol5vx6/images/9ba4cd5b-1751-4410-adea-640b39425b51.jpeg" style="width: 70px;"/><br/>
+              ${message.replaceAll("\n", "<br/>")}
+              ${link}
+            `
+          })
         })
-      })
-      console.log('dataEmailSend:', dataEmailSend);
-      
-      
+        console.log("dataEmailSend:", dataEmailSend);
+        
+        ret.push(`${clients.find(xx=>xx.id==x.id).name} ---> OK`)
+      }else{
+        ret.push(`${clients.find(xx=>xx.id==x.id).name} ---> Erro. Não existem arquivos`)
 
-      // console.log('mailOptions', mailOptions);
-      
-      // transporter.sendMail(mailOptions, function(error, info){
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //     return 'Email eviado: ' + info.response
-      //   }
-      // });
-
-
+      }
+     
+     
+     
     })
-
-    return "ok"
+    )
+    
+    console.log('ret>', ret);
+    return ret
 
 })

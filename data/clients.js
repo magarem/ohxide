@@ -2,7 +2,7 @@ import {db} from "@/data/db_cmds"
 
 let ops = []
 const products = await db.get("select * from products")
-products.forEach(element => {
+products?.forEach(element => {
   ops.push({name: element.name, code: element.id})
 });
 export const clients = {

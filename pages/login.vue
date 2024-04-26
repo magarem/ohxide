@@ -3,7 +3,7 @@
         <div id="container1">
             <div class="flex">
                 <img src="/img/logo.jpeg" style="width: 150px; margin-right: 30px;"/>
-            <h1 style="margin-top: 39px; margin-left: 15px;">WReport</h1>
+            <h1 style="margin-top: 39px; margin-left: 15px;">Ohxide report system</h1>
             </div>
             <div id="login-container">
             <form>
@@ -16,10 +16,10 @@
                     autocomplete="off"
                 />
                 <input
-                    v-model="user.username"
+                    v-model="user.email"
                     type="text"
                     class="input"
-                    placeholder="Usuário"
+                    placeholder="email"
                     name="uname"
                     autocomplete="off"
                     required
@@ -53,7 +53,7 @@ const { authenticated } = storeToRefs(useAuthStore()); // make authenticated sta
 let msg = ref('')
 const user = ref({
   type: 'clients',
-  username: '',
+  email: '',
   password: '',
 });
 const router = useRouter();

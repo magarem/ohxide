@@ -15,7 +15,10 @@ export default defineNuxtRouteMiddleware((to) => {
     return navigateTo('/');
   }
   
-  
+  if (!to?.name) {
+    // alert()
+      return navigateTo('/');
+    }
 
   console.log('to?.name', to?.name);
   

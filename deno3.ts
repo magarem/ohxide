@@ -1,3 +1,5 @@
+//#D9D9D9
+
 // @deno-types="npm:@types/express@4"
 import express, { NextFunction, Request, Response } from "npm:express@4.18.2";
 // import demoData from "./data_blob.json" assert { type: "json" };
@@ -36,11 +38,6 @@ const hex2rgb = (hex) => {
     // return {r, g, b} 
     return { r, g, b };
 }
-const db = new DB("database.db");
-let data = null
-
-data = await db.query("select * from config where id like 'config_report'")
-const config_report = JSON.parse(data[0][1])
 
 // console.log("config_report", config_report);
 
@@ -59,9 +56,20 @@ app.use(reqLogger);
 
 app.get("/test", async (req, res) => {
   try {
+
+    const tempo = +new Date
     // const req = await readBody(event)
     console.log("To aqui!");
     // console.log('req:', req);
+
+    const db = new DB("database.db");
+    // let data = null
+
+    const data = await db.query("select * from config where id like 'config_report'")
+  
+    db.close();
+
+    const config_report = JSON.parse(data[0][1])
 
     // const client = JSON.parse(JSON.parse(req.query.client))
     const client = JSON.parse(req.query.client)
@@ -131,7 +139,7 @@ app.get("/test", async (req, res) => {
 // await Deno.remove("public/upload/reports/"+Deno.args[0]+'_report.pdf');
 // await Deno.writeFile(client.id + '_report.pdf', pdfBytes);
 
-  await Deno.writeFile(`${basePath_tosave}${client.id}_report_${req.query.year}_${req.query.month}.pdf`, pdfBytes);
+  await Deno.writeFile(`${basePath_tosave}${client.id}_report_${req.query.year}_${req.query.month}_${tempo}.pdf`, pdfBytes);
 // Deno.writeFileSync(`${basePath}${client.id}_report_${client.year}_${client.month}.pdf`, pdfBytes);
 // await Deno.copyFile(client.id + '_report.pdf', `${basePath}${client.id}_report_${client.year}_${client.month}.pdf`);
 // } catch (error) {
@@ -142,7 +150,7 @@ app.get("/test", async (req, res) => {
 // Deno.exit()
    
     // console.log("!!!!!!!!!!!!!!"+clientfiles)
-  res.status(200).send(`${client.id}_report_${req.query.year}_${req.query.month}.pdf`);
+  res.status(200).send(`${client.id}_report_${req.query.year}_${req.query.month}_${tempo}.pdf`);
 
    
   } catch (error) {

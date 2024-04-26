@@ -1,5 +1,5 @@
-import {db} from "@/data/db_cmds"
-
+// import {db} from "@/data/db_cmds"
+import Database from 'better-sqlite3';
 function generateToken(n) {
     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var token = '';
@@ -13,10 +13,21 @@ export default defineEventHandler(async (event) => {
     // const query = getQuery(event)
     const body = await readBody(event)
     const type = body.type
-    const username = body.username
+    const email = body.email
     const password = body.password
-    console.log(`select * from ${type} where username like '${username}' and password like '${password}' `);
-    const data = await db.get(`select * from ${type} where username like '${username}' and password like '${password}' `)
+    const sql = `select * from ${type} where email like '${email}' and password like '${password}' `
+    // const data = await $fetch('/api/dbservices?type=encoded&sql=' + encodeURI(`select * from ${type} where email like '${email}' and password like '${password}' `));
+   
+    console.log('sql', sql);
+
+    const db = new Database('database.db');
+    const data = db.prepare(sql).all()
+    // const ret_ = selectData.run() 
+    // console.log('selectData:', selectData);
+    db.close();
+    // return selectData
+   
+   
     console.log('db---------->', data)
     if (data.length>0){
         const userObj = {
