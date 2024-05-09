@@ -15,8 +15,8 @@
 
           <div class="flex flex-column gap-2 mb-5">
               <label for="email">Email</label>
-              <InputText id="email" v-model="user.email" aria-describedby="email-help" />
-              <small id="email-help">Seu email de contato para receber as notificações e relatórios</small>
+              <InputText id="email" v-model="user.email" aria-describedby="email-help" readonly=""/>
+              <small id="email-help">Para alterar entre em contato com o administrador do sistema</small>
           </div>
 
           <div class="flex flex-column gap-2 mb-5">
@@ -82,6 +82,9 @@ year: null,
 month: null
 })
 
+
+
+
 console.log("authenticated.value:", authenticated.value);
 if (!authenticated.value) {
   navigateTo('/login');
@@ -124,6 +127,9 @@ const updateUserData = async () => {
     method: 'PATCH',
     body: JSON.stringify({table: 'clients', data: user.value, where: "id like '" + dataUser.value.id + "'" })
   })
+
+  logUserOut()
+  navigateTo('/login');
 }
 
 

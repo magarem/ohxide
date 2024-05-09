@@ -29,7 +29,8 @@ export default defineNuxtRouteMiddleware((to) => {
     to?.name !== 'admin' && 
     to?.name !== 'admin-login' &&
     to?.name !== 'download' &&
-    to?.name !== 'file'
+    to?.name !== 'file' &&
+    to?.name !== 'redefinirsenha'
     ) {
     abortNavigation();
     return navigateTo('/login?to='+to?.fullPath);

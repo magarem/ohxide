@@ -32,8 +32,10 @@
                     name="psw"
                     autocomplete="off"
                     required
-                />  
+                /> 
                 <button @click.prevent="login">Entrar</button>
+                <br/><br/>
+                <a href=# @click="esqueciASenha">Esqueci a senha</a>
                 <div class='msg mt-3'>{{  msg }}</div>
             </form>
         </div>
@@ -65,6 +67,42 @@ if (process.client){
     console.log('route.query.to:', toSerialized.value);
 }
 
+
+const esqueciASenha = async () => {
+    if (!user.value.email) {
+        alert("Digite seu email")
+    }else{
+        let message = `
+            Olá ${user.value.email},
+            Recebemos uma solicitação para redefinir a senha da sua conta no Ohxide web report. Para completar o processo de redefinição de senha, clique no link abaixo:
+            <a href="http://216.238.98.143:3000/redefinirsenha?client=${user.value.email}">Redefinir senha</a>
+            Se você não solicitou esta redefinição de senha, por favor, ignore este e-mail e sua senha permanecerá inalterada.
+            Lembre-se de criar uma senha forte e única para garantir a segurança da sua conta. Recomendamos o uso de uma combinação de letras maiúsculas e minúsculas, números e caracteres especiais.
+            Se você tiver alguma dúvida ou precisar de assistência adicional, não hesite em entrar em contato conosco respondendo a este e-mail.
+            
+            Atenciosamente,
+            Equipe Ohxide
+        ` 
+        console.log(message);
+        
+        const dataEmailSend = await $fetch('/api/mailersend', {
+            method: 'POST',
+            body: {
+                to: user.value.email,
+                destinatario: user.value.email,
+                subject: "Redefinição de Senha - Ohxide Web Report",
+                // body: req.subject,
+                html: `
+                    <img src="https://bucket.mailersendapp.com/neqvygmrw5l0p7w2/jy7zpl9359ol5vx6/images/9ba4cd5b-1751-4410-adea-640b39425b51.jpeg" style="width: 70px;"/><br/>
+                    ${message.replaceAll("\n", "<br/>")}
+                `
+            }
+        })
+        alert("Siga as instruções de alteração de senha enviadas para seu email")
+        console.log('dataEmailSend:', dataEmailSend);
+        
+    }
+}
 
 
 const login = async () => {

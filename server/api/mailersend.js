@@ -19,22 +19,33 @@ export default defineEventHandler(async (event) => {
       new Recipient(req.to, req.destinatario)
     ];
 
-    const attachments = [
+    // const attachments = null
+    if (req.attach) {
+      let attachments = [
         new Attachment(
           fs.readFileSync(req.attach, { encoding: 'base64' }),
           req.attach.split(/[\s\/]+/).at(-1),
           'attachment'
         )
       ]
-      
-      const emailParams = new EmailParams()
-        .setFrom(sentFrom)
-        .setTo(recipients)
-        .setReplyTo(sentFrom)
-        .setAttachments(attachments)
-        .setSubject(req.subject)
-        .setHtml(req.html)
-        // .setText("This is the text content");
 
-    await mailerSend.email.send(emailParams);
+      const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setReplyTo(sentFrom)
+      .setAttachments(attachments)
+      .setSubject(req.subject)
+      .setHtml(req.html)
+      await mailerSend.email.send(emailParams);
+    }else{
+      const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setReplyTo(sentFrom)
+      .setSubject(req.subject)
+      .setHtml(req.html)
+      await mailerSend.email.send(emailParams);
+    }
+
+   
 })

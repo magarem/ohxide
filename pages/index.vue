@@ -45,7 +45,7 @@ const { authenticated } = storeToRefs(useAuthStore()); // make authenticated sta
 const dataUser = useCookie('dataUser')
 let flag_mostra_link = ref(false)
 const vai = ref(null)
-const accessOk = ref(false)
+const accessOk = ref(true)
 let data2 = []
 const tableFilter = ref({
 year: null,
