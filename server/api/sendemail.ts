@@ -92,6 +92,7 @@ export default defineEventHandler(async (event) => {
       const meses = new Array("Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro")
       let message = req.message
       message = message.replaceAll("[nome]", x.name)
+      message = message.replaceAll("[username]", x.username)
       message = message.replaceAll("[empresa]", x.empresa)
       message = message.replaceAll("[email]", x.email)
       message = message.replaceAll("[ano]", req.year)

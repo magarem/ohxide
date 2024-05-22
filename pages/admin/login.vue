@@ -1,12 +1,10 @@
 <template>
     <div class="body">
         <div id="container1">
-            <div class="flex">
-                <img src="/img/logo.jpeg" style="width: 150px; margin-right: 30px;"/>
-               <div>
-                <h1 style="margin-top: 12px; margin-left: 15px;">Ohxide report system</h1>
-                <h3 style="margin-top: 15px; margin-left: 15px;">Admin</h3>
-               </div>
+            <div class="_flex">
+                <img src="/img/logo.jpeg" style="width: 370px; margin-right: 30px; border-radius: 2%;"/>
+                <!-- <h1 style="margin-top: 12px; margin-left: 15px;">Ohxide report system</h1> -->
+                <h1 style="margin-top: -10px; margin-left: 15px;">Admin</h1>
                 
             </div>
             

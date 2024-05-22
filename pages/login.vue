@@ -2,8 +2,8 @@
     <div class="body">
         <div id="container1">
             <div class="flex">
-                <img src="/img/logo.jpeg" style="width: 150px; margin-right: 30px;"/>
-            <h1 style="margin-top: 39px; margin-left: 15px;">Ohxide report system</h1>
+                <img src="/img/logo.jpeg" style="width: 370px; margin-right: 30px;  border-radius: 2%;"/>
+            <!-- <h1 style="margin-top: 39px; margin-left: 15px;">Ohxide report system</h1> -->
             </div>
             <div id="login-container">
             <form>

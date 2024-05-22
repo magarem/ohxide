@@ -57,10 +57,9 @@
                     <!-- <h3>{{ config_emailsend.meta.name }}</h3> -->
                     <div class="formgrid grid" >
                         <table style="width: 100%;">
-                            <tr>
+                            <!-- <tr>
                                 <td style="width: 20%; text-align: right; padding-right: 10px;">Tipo</td>
                                 <td>
-                                    <!-- {{ selectedEmailsOptions.data }} -->
                                     <div _class="card flex justify-content-center">
                                         <Listbox v-model="selectedEmailsOptions" :options="emailsOptions" optionLabel="id" class="w-full md:w-14rem" />
                                     </div>
@@ -70,29 +69,27 @@
                                 <td style="width: 20%; padding-right: 10px;">
                                     <Button class="mr-2" style="width: 200px;" @click="newEmail" :disabled="isDesabled" label="Novo" _class="w-50" />
                                 </td>
-                            </tr>
-                            <tr style="width: 100%;" _class="field col-12" >
+                            </tr> -->
+                            <!-- <tr style="width: 100%;" _class="field col-12" >
                                 <td style="width: 20%; text-align: right; padding-right: 10px;">
                                     <label style="font-size: 17px; font-weight:350;" for="emailSubject">Assunto</label>
                                 </td>
                                 <td style="width: 30%;">
                                     <input id="emailSubject" v-model="emailSubject" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
                                 </td>
-                                <!-- <td style="width: 50%;">
-                                    <Button style="width: 200px;" @click="reset('config_emailsend')" label="Cancel" severity="secondary" outlined _class="w-50" />
-
-                                </td> -->
+                               
                                 <td style="width: 50%;">
                                 <span style="padding-left:10px; font-style: italic;">{{ item[1].help }}</span> 
                                 </td>
-                            </tr>
+                            </tr> -->
+                            
                             <tr style="width: 100%;" _class="field col-12" v-for="item in Object.entries(config_emailsend.schema)" :key="item[0]">
                                 <td style="width: 20%; text-align: right; padding-right: 10px;">
                                     <label style="font-size: 17px; font-weight:350;" :for="item[1].name">{{item[1].name}}</label>
                                 </td>
                                 <td style="width: 30%;"><input v-if="item[1].type=='text'" :id="item[1].name" v-model="config_emailsend.data[item[0]]" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
                                     <div v-if="item[1].type=='textarea'">
-                                        <Textarea v-model="emailBody" rows="5" style="width: 100%"/>
+                                        <Textarea v-model="config_emailsend.data[item[0]]" rows="5" style="width: 100%"/>
                                     </div>
                                 </td>
                                 <!-- <td style="width: 50%;">
