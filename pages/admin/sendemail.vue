@@ -68,18 +68,12 @@
 definePageMeta({
     layout: 'defaultadmin'
 })
-import { useAuthStore } from '~/store/auth';
+
 import {db} from "~/data/db_cmds"
-const router = useRouter();
-const dataUser = useCookie('dataUser')
-const { logUserOut } = useAuthStore();
-const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
-let retorno = ref()
-const visible = ref(false);
-const isDesabled = ref(false);
+
 const monitor = ref("");
-const clients = ref(await db.get("select * from clients"))
-const toast = useToast();
+const clients = ref(await db.get("select * from clients where status like 'ativo' order by id desc"))
+
 const ret = await db.get("select * from config where id like 'config_emailsend'")
 const emailSendData = JSON.parse(ret[0].data)
 console.log('emailSendData:', emailSendData);

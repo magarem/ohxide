@@ -23,7 +23,7 @@
             <Column field="month" header="Mês"></Column>
             <Column headerStyle="min-width:10rem;"  header="Baixar">
               <template #body="slotProps">
-                  <Button severity="secondary" ref="vai" type="button" label="Baixar"   @click="merge(slotProps.data)"/>
+                  <Button severity="secondary" ref="vai" type="button" label="Baixar" @click="merge(slotProps.data)"/>
                 </template>
             </Column>
           </DataTable>

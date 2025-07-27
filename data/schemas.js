@@ -111,13 +111,18 @@ const clients = {
         type: "STRING",
         null: false
       },
-      plano: {
-        label: "Plano",
-        type: "SELECT",
-        null: true,
-        placeholder: "Selecione",
-        options: array_client_planos
+      data_limite: {
+        label: "Data de término",
+        type: "STRING",
+        null: false
       },
+      // plano: {
+      //   label: "Plano",
+      //   type: "SELECT",
+      //   null: true,
+      //   placeholder: "Selecione",
+      //   options: array_client_planos
+      // },
       // data_limite: {
       //   label: "Data limite",
       //   type: "STRING",
