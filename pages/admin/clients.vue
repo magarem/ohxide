@@ -86,7 +86,7 @@ const insertdata = async (data_) => {
 
 //     // // limt date cal
 //     // console.log("-------**-----2")
-    data2.data_limite = await limitDataCalc(data2.data_adesao, data2.plano)
+   // data2.data_limite = await limitDataCalc(data2.data_adesao, data2.plano)
     
     console.log("data2.data_limite:", data2.data_limite);
 
@@ -110,7 +110,7 @@ const updatedata = async (data_) => {
             console.log('lll>>', data2[item[0]]);
         }
     })
-    data2.data_limite = await limitDataCalc(data2.data_adesao, data2.plano)
+    //data2.data_limite = await limitDataCalc(data2.data_adesao, data2.plano)
 
     console.log('data2.data_limite', data2.data_limite);
     const ret = await db.update({
