@@ -64,7 +64,7 @@ export default defineEventHandler(async (event) => {
       // await $fetch(`/api/shell?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files}`)
       console.log("whay stop?");
       if (data_[0]?.files){
-        let data2_ = await $fetch(`http://216.238.98.143:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`);
+        let data2_ = await $fetch(`http://77.37.69.142:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`);
         console.log('data2_', data2_);
         return data2_
       }else{
