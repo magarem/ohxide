@@ -111,18 +111,13 @@ const clients = {
         type: "STRING",
         null: false
       },
-      data_limite: {
-        label: "Data de término",
-        type: "STRING",
-        null: false
+      plano: {
+        label: "Plano",
+        type: "SELECT",
+        null: true,
+        placeholder: "Selecione",
+        options: array_client_planos
       },
-      // plano: {
-      //   label: "Plano",
-      //   type: "SELECT",
-      //   null: true,
-      //   placeholder: "Selecione",
-      //   options: array_client_planos
-      // },
       // data_limite: {
       //   label: "Data limite",
       //   type: "STRING",
@@ -136,12 +131,12 @@ const clients = {
         placeholder: "Selecione",
         options: array_client_status
       },
-      tags: {
-          label: "Etiqueta",
-          type: "MULTISELECT",
+      historico: {
+          label: "Histórico",
+          type: "textarea",
           null: true,
-          placeholder: "Selecione",
-          options: Array_products
+          placeholder: "Digite o histórico do cliente",
+          notshow: true
       }
     }
 }
