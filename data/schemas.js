@@ -111,19 +111,26 @@ const clients = {
         type: "STRING",
         null: false
       },
-      plano: {
-        label: "Plano",
-        type: "SELECT",
-        null: true,
-        placeholder: "Selecione",
-        options: array_client_planos
+      tags: {
+          label: "Produtos",
+          type: "MULTISELECT",
+          null: true,
+          placeholder: "Selecione",
+          options: Array_products
       },
-      // data_limite: {
-      //   label: "Data limite",
-      //   type: "STRING",
-      //   null: false
-      // }
-      // ,
+      // plano: {
+      //   label: "Plano",
+      //   type: "SELECT",
+      //   null: true,
+      //   placeholder: "Selecione",
+      //   options: array_client_planos
+      // },
+      data_limite: {
+        label: "Data limite",
+        type: "STRING",
+        null: false
+      }
+      ,
       status: {
         label: "Status",
         type: "SELECT",
