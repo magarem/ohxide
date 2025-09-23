@@ -172,7 +172,6 @@ const client_planos = {
   }
 }
 
-
 const client_status = {
   table: "client_status",
   title: "Status do cliente",
@@ -244,14 +243,9 @@ const reports = {
         extra: "PRIMARY KEY",
         null: false
       },
-      year: {
-        label: "Ano",
-        type: "STRING",
-        null: false
-      },
-      month: {
-        label: "Mês",
-        type: "STRING",
+      date: {
+        label: "Data",
+        type: "date",
         null: false
       },
       name: {

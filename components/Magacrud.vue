@@ -44,6 +44,11 @@ const source2 = props.source2;
 const files = ref();
 const submitBtn = ref(null);
 
+function formatarData(iso) {
+  const [ano, mes, dia] = iso.split('-')
+  return `${dia}/${mes}/${ano}`
+}
+
 const onRowReorder = (event) => {
   data.value = event.value;
   emit("updateorder", data.value);
@@ -365,6 +370,11 @@ async function handleImageUpload(x) {
                     slotProps.data[item.id]
                   }}</a>
                 </div>
+                 <div
+                  v-if="['date'].includes(item.type.toLowerCase())"
+                >
+                  {{ formatarData(slotProps.data[item.id]) }}
+                </div>
                 <div
                   v-if="['string', 'integer'].includes(item.type.toLowerCase())"
                 >
@@ -432,6 +442,13 @@ async function handleImageUpload(x) {
           <div v-for="item in dataGridColumns" :key="item.id" class="field">
             <div v-show="item.id.toLowerCase() !== 'id'">
               <label for="name">{{ item.label }}</label>
+                 <InputText
+                v-if="['date'].includes(item.type.toLowerCase())"
+                id="name"
+                v-model.trim="dataItem[item.id]"
+                type="date"
+                autofocus
+              />
               <InputText
                 v-if="['string', 'integer'].includes(item.type.toLowerCase())"
                 id="name"
