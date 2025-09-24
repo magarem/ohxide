@@ -56,6 +56,8 @@ export default defineEventHandler(async (event) => {
           ano DESC, 
           mes DESC 
       ` 
+
+      console.log("sql:", sql);
       // let data_ = await $fetch('/api/dbservices?sql=' + sql.replace(/\s+/g,' ').trim());
       let data_ = db.prepare(sql.replace(/\s+/g,' ').trim()).all()
      
@@ -63,6 +65,7 @@ export default defineEventHandler(async (event) => {
       // await $fetch(`/api/shell?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files}`)
       console.log("whay stop?");
       if (data_[0]?.files){
+        console.log(`http://77.37.69.142:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`)
         let data2_ = await $fetch(`http://77.37.69.142:3005/test?year=${year}&month=${month}&client=${JSON.stringify(client)}&files=${data_[0].files.split(',').map(x=>'/home/maga/dev/ohxide/upload/'+x).join(',')}`);
         console.log('data2_', data2_);
         return data2_
