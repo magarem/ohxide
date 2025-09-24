@@ -34,12 +34,12 @@ export default defineEventHandler(async (event) => {
     const client_final_report_build = async (year, month, client) => {
       const sql = `
       select 
-          COUNT(reports.id), 
-          reports.year, 
-          reports.month, 
+          COUNT(reports.id),
           GROUP_CONCAT(reports.name) as nome, 
           GROUP_CONCAT(reports.file) as files, 
-          GROUP_CONCAT(products.name) as tags 
+          GROUP_CONCAT(products.name) as tags,
+          strftime('%Y', reports.date) AS ano,
+          strftime('%m', reports.date) AS mes
       from 
           reports, 
           products, 
@@ -48,14 +48,13 @@ export default defineEventHandler(async (event) => {
           reports.tag = products.id AND 
           instr(clients.tags, reports.tag) > 0 AND
           clients.id like '${client.id}' AND
-          reports.year LIKE '${year}' AND
-          reports.month LIKE '${month}' 
+          strftime('%Y', reports.date) = '${year}' AND 
+          strftime('%m', reports.date) = '${month}' 
       GROUP BY 
-          reports.year, 
-          reports.month 
+          ano, mes
       order by 
-          year DESC, 
-          month DESC 
+          ano DESC, 
+          mes DESC 
       ` 
       // let data_ = await $fetch('/api/dbservices?sql=' + sql.replace(/\s+/g,' ').trim());
       let data_ = db.prepare(sql.replace(/\s+/g,' ').trim()).all()
