@@ -108,6 +108,7 @@ export default defineEventHandler(async (event) => {
     
       let get_final_report_name = await client_final_report_build(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
      
+      console.log("get_final_report_name:", get_final_report_name);
       
       if (get_final_report_name) {
         console.log(`/home/maga/dev/ohxide/reports/${get_final_report_name}`);
