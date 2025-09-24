@@ -106,6 +106,7 @@ export default defineEventHandler(async (event) => {
       
       // download(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
     
+      console.log(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0]);
       let get_final_report_name = await client_final_report_build(req.year, req.month, clients.filter(xx=>xx.id==x.id)[0])
      
       console.log("get_final_report_name:", get_final_report_name);
