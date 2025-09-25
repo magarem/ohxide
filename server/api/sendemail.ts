@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
           instr(clients.tags, reports.tag) > 0 AND
           clients.id like '${client.id}' AND
           strftime('%Y', reports.date) = '${year}' AND 
-          strftime('%m', reports.date) = '${month}' 
+          CAST(strftime('%m', reports.date) AS INTEGER) = ${month}
       GROUP BY 
           ano, mes
       order by 
