@@ -90,7 +90,9 @@ onBeforeMount(()=>{
 
 const sql = `
   select 
-      COUNT(reports.id), reports.year, reports.month, 
+      COUNT(reports.id), 
+      strftime('%Y', reports.date) AS year,
+      strftime('%m', reports.date) AS month,
       GROUP_CONCAT(reports.name) as nome, 
       GROUP_CONCAT(reports.file) as files, 
       GROUP_CONCAT(products.name) as tags 
@@ -101,12 +103,12 @@ const sql = `
       instr(clients.tags, reports.tag) > 0 AND
       clients.id like '${dataUser.value.id}'
   GROUP BY 
-      reports.year, reports.month 
+      year, month 
   order by 
       year DESC, month DESC 
 ` 
+let data = await $fetch('/api/dbservices?sql=' + encodeURIComponent(sql));
 
-let data = await $fetch('/api/dbservices?sql=' + sql.replace(/\s+/g,' ').trim());
 
 const merge = async (xx) => {
   const { data: responseData } = await useFetch(`/api/myproxy`, {
@@ -132,6 +134,12 @@ const merge = async (xx) => {
 }
 
 const aaa = computed(() => {
-  return data.filter(x=>x.year==(tableFilter.value.year||x.year)&x.month==(tableFilter.value.month||x.month))
-})
+  const yearFilter = tableFilter.value.year;
+  const monthFilter = tableFilter.value.month?.toString().padStart(2, '0'); // garante '08' em vez de '8'
+
+  return data.filter(x =>
+    (x.year === (yearFilter || x.year)) &&
+    (x.month === (monthFilter || x.month))
+  );
+});
 </script>
