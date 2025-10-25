@@ -44,7 +44,7 @@
 </template>
 <script lang="ts" setup>
  definePageMeta({
-        layout: ''
+        layout: false
     })
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '~/store/auth';
@@ -63,7 +63,7 @@ const route = useRoute();
 
 let toSerialized = ref()
 if (process.client){
-     toSerialized.value = location.href.split('?to=')[1]
+    toSerialized.value = location.href.split('?to=')[1]
     console.log('route.query.to:', toSerialized.value);
 }
 

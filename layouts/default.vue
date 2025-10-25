@@ -4,23 +4,30 @@ import {db} from "@/data/db_cmds"
 import "primeflex/primeflex.css";
 const router = useRouter();
 const dataUser = useCookie('dataUser')
-console.log('dataUser:', !dataUser.value);
+console.log('dataUser:', dataUser.value);
 const { logUserOut } = useAuthStore();
 const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
-const sqlret = await db.get(`select * from client_planos where id = ${dataUser.value.plano}`)
-
-const userPlanoName = sqlret[0].name
-const logOut = () => {
-  logUserOut();
-  router.push('/login');
-};
 
 if (!authenticated.value || !dataUser.value) {
 	console.log('!!!!!!!!!');
 	router.push('login');
 }
 
-const menu = ref();
+const sqlret0 = await db.get(`select * from clients where id = '${dataUser.value.id}'`)
+
+const user_seek = sqlret0[0]
+
+console.log('user_seek:', user_seek);
+
+if (!user_seek){
+  logUserOut();
+  router.push('/login');
+}
+
+const sqlret = await db.get(`select * from client_planos where id = ${dataUser.value.plano}`)
+
+const userPlanoName = sqlret[0].name
+
 const items_0 = ref([
   {
     label: 'Home',
@@ -35,29 +42,10 @@ const items_0 = ref([
         
     }
 ]);
-const items = ref([
-    {
-        label: 'Configurações',
-        icon: 'pi pi-file',
-        command: () => {
-            router.push('/usersettings');
-        }
-        
-    },
-    {
-        separator: true
-    },
-    {
-        label: 'Sair',
-        icon: 'pi pi-file-edit',
-        command: () => {
-          logOut()
-        }
-    }
-]);
 
-const toggle = (event) => {
-    menu.value.toggle(event);
+const logOut = () => {
+  logUserOut();
+  router.push('/login');
 };
 
 

@@ -57,6 +57,12 @@ if (!authenticated.value) {
   navigateTo('/login');
 }
 
+function brParaIso(dataBr) {
+  if (!dataBr) return null;
+  const [dia, mes, ano] = dataBr.split('/');
+  return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+}
+
 onBeforeMount(()=>{
   if (!dataUser.value || dataUser.value.type != 'clients'){
     logUserOut()
@@ -101,7 +107,8 @@ const sql = `
   where 
       reports.tag = products.id AND 
       instr(clients.tags, reports.tag) > 0 AND
-      clients.id like '${dataUser.value.id}'
+      clients.id like '${dataUser.value.id}' AND
+      reports.date >= '${dataUser.value.data_adesao.split('/').reverse().join('-')}'
   GROUP BY 
       year, month 
   order by 
